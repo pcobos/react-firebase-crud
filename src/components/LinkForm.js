@@ -2,7 +2,9 @@ import React from 'react';
 
 const LinkForm = () => {
   return (
-    <h1>Bamba</h1>
+    <form className="card card-body form-group">
+      <input type="text" className="form-control" placeholder="url.com"/>
+    </form>
   )
 }
 
