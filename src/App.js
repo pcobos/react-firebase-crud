@@ -4,9 +4,11 @@ import Link from './components/Link';
 
 function App() {
   return (
-    <div className="App">
-      <LinkForm/>
-      <Link/>
+    <div className="container p-4">
+      <div className="row">
+        <LinkForm/>
+        <Link/>
+      </div>
     </div>
   );
 }
