@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 
 const LinkForm = () => {
 
+  const initialStateAttributes = {
+    url: '',
+    name: '',
+    description: ''
+  }
+
+  const [formValues, setFormValues] = useState(initialStateAttributes)
+
   const handleInputChange = (e) => {
-    console.log(e.target.value);
+    const { name, value } = e.target
+    setFormValues({...formValues, [name]: value})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("working");
+    console.log(formValues);
   }
 
   return (
