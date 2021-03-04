@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LinkForm = () => {
+const LinkForm = (props) => {
 
   const initialStateAttributes = {
     url: '',
@@ -17,7 +17,7 @@ const LinkForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues);
+    props.addOrEditLink(formValues);
   }
 
   return (
