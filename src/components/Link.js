@@ -11,12 +11,14 @@ const Link = () => {
   }
 
   const getLinks = async () => {
+    const linkObjects = [];
     db.collection('links').onSnapshot((querySnapshot) => {
       querySnapshot.forEach(link => {
-        console.log(link.data());
+        linkObjects.push({...link.data(), id: link.id})
       });
     });
-    
+    console.log(linkObjects);
+    setLinks(linkObjects);
   }
 
   useEffect(() => {
@@ -26,6 +28,11 @@ const Link = () => {
   return (
     <div>
       <LinkForm addOrEditLink={addOrEditLink}/>
+      {links.map((link, index) => {
+        return (
+          <h1>{link.name}</h1>
+        )
+      })}
       <h1>Bamba 3</h1>
     </div>
   )
