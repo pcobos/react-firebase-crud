@@ -4,15 +4,21 @@ import {db} from "../firebase";
 
 const Link = () => {
 
-  useEffect(async () => {
-    await const records = db.collection('links').get();
-    console.log(records);
-  }, [])
-
   const addOrEditLink = async (linkObject) => {
     await db.collection('links').doc().set(linkObject)
     console.log("Your first Firestore record, baby!");
   }
+
+  const getLinks = async () => {
+    const querySnapshot = await db.collection('links').get();
+    querySnapshot.forEach(link => {
+      console.log(link.data());
+    });
+  }
+
+  useEffect(() => {
+    getLinks();
+  }, []);
 
   return (
     <div>
