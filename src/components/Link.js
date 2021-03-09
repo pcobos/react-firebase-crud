@@ -10,15 +10,24 @@ const Link = () => {
     console.log("Your first Firestore record, baby!");
   }
 
+  const deleteLink = async (id) => {
+    if (window.confirm('Are you sure that you want to delete this link?')) {
+      await db.collection('links').doc(id).delete();
+      console.log('Task Deleted')
+    }
+  }
+
   const getLinks = async () => {
     const linkObjects = [];
     db.collection('links').onSnapshot((querySnapshot) => {
-      querySnapshot.forEach(link => {
+      querySnapshot.forEach((link) => {
         linkObjects.push({...link.data(), id: link.id})
       });
       setLinks(linkObjects);
     });
   }
+
+
 
   useEffect(() => {
     getLinks();
@@ -32,11 +41,14 @@ const Link = () => {
       <div className="col-md-8">
         {links.map(link => {
           return (
-            <div className="card p-2 mb-2">
+            <div className="card p-2 mb-2" key={link.id}>
               <div className="card-body">
-                <h4>{link.name}</h4>
+                <div className="d-flex justify-content-between">
+                  <h4>{link.name}</h4>
+                  <i className="material-icons text-danger" onClick={() => deleteLink(link.id)}>close</i>
+                </div>
                 <p>{link.description}</p>
-                <a href={link.url} target="_blank">Go to Website</a>
+                <a href={link.url} target="_blank" rel="noreferrer noopener">Go to Website</a>
               </div>
             </div>
           )
