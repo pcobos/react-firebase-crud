@@ -16,9 +16,8 @@ const Link = () => {
       querySnapshot.forEach(link => {
         linkObjects.push({...link.data(), id: link.id})
       });
+      setLinks(linkObjects);
     });
-    console.log(linkObjects);
-    setLinks(linkObjects);
   }
 
   useEffect(() => {
@@ -27,13 +26,22 @@ const Link = () => {
 
   return (
     <div>
-      <LinkForm addOrEditLink={addOrEditLink}/>
-      {links.map((link, index) => {
-        return (
-          <h1>{link.name}</h1>
-        )
-      })}
-      <h1>Bamba 3</h1>
+      <div className="col-md-4 mb-2">
+        <LinkForm addOrEditLink={addOrEditLink}/>
+      </div>
+      <div className="col-md-8">
+        {links.map(link => {
+          return (
+            <div className="card p-2 mb-2">
+              <div className="card-body">
+                <h4>{link.name}</h4>
+                <p>{link.description}</p>
+                <a href={link.url} target="_blank">Go to Website</a>
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
