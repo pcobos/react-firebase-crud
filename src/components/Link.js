@@ -5,9 +5,10 @@ import {db} from "../firebase";
 const Link = () => {
   const [links, setLinks] = useState([])
 
+  
+
   const addOrEditLink = async (linkObject) => {
-    await db.collection('links').doc().set(linkObject)
-    console.log("Your first Firestore record, baby!");
+    await db.collection('links').doc().set(linkObject);
   }
 
   const deleteLink = async (id) => {
@@ -18,8 +19,8 @@ const Link = () => {
   }
 
   const getLinks = async () => {
-    const linkObjects = [];
     db.collection('links').onSnapshot((querySnapshot) => {
+      const linkObjects = [];
       querySnapshot.forEach((link) => {
         linkObjects.push({...link.data(), id: link.id})
       });
@@ -27,11 +28,11 @@ const Link = () => {
     });
   }
 
-
-
   useEffect(() => {
     getLinks();
   }, []);
+
+
 
   return (
     <div>
