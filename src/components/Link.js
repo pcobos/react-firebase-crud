@@ -10,13 +10,18 @@ const Link = () => {
 
   const addOrEditLink = async (linkObject) => {
     await db.collection('links').doc().set(linkObject);
+    toast('Link added successfully', {
+      type: "success",
+      autoClose: 1500
+    })
   }
 
   const deleteLink = async (id) => {
     if (window.confirm('Are you sure that you want to delete this link?')) {
       await db.collection('links').doc(id).delete();
       toast('Link has been deleted', {
-        type: "error"
+        type: "error",
+        autoClose: 1500
       })
     }
   }
