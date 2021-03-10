@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import Link from './components/Link';
 
@@ -7,6 +8,7 @@ function App() {
       <div className="row">
         <Link/>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

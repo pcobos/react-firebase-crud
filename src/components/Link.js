@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import LinkForm from './LinkForm';
 import {db} from "../firebase";
+import { toast } from 'react-toastify';
 
 const Link = () => {
   const [links, setLinks] = useState([])
@@ -14,7 +15,9 @@ const Link = () => {
   const deleteLink = async (id) => {
     if (window.confirm('Are you sure that you want to delete this link?')) {
       await db.collection('links').doc(id).delete();
-      console.log('Task Deleted')
+      toast('Link has been deleted', {
+        type: "error"
+      })
     }
   }
 
