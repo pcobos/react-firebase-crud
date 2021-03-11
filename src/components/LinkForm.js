@@ -24,7 +24,7 @@ const LinkForm = (props) => {
   
   const getLinkById = async (id) => {
     const doc = await db.collection('links').doc(id).get();
-    setFormValues(doc.data());
+    setFormValues({...doc.data()});
   }
   
   useEffect(() => {

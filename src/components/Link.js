@@ -10,18 +10,23 @@ const Link = () => {
   
 
   const addOrEditLink = async (linkObject) => {
-    if (currentId === '') {
-      await db.collection('links').doc().set(linkObject);
-      toast('Link added successfully', {
-      type: "success",
-      autoClose: 1500
-      })
-    } else {
-      await db.collection('links').doc().update(linkObject);
-      toast('Link updated successfully', {
-      type: "warning",
-      autoClose: 1500
-      })
+    try {
+      if (currentId === '') {
+        await db.collection('links').doc().set(linkObject);
+        toast('Link added successfully', {
+          type: "success",
+          autoClose: 1500
+        })
+      } else {
+        await db.collection('links').doc(currentId).update(linkObject);
+        toast('Link updated successfully', {
+          type: "info",
+          autoClose: 1500
+        });
+        setCurrentId('');
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
