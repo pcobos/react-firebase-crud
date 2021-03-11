@@ -5,15 +5,24 @@ import { toast } from 'react-toastify';
 
 const Link = () => {
   const [links, setLinks] = useState([])
+  const [currentId, setCurrentId] = useState('');
 
   
 
   const addOrEditLink = async (linkObject) => {
-    await db.collection('links').doc().set(linkObject);
-    toast('Link added successfully', {
+    if (currentId === '') {
+      await db.collection('links').doc().set(linkObject);
+      toast('Link added successfully', {
       type: "success",
       autoClose: 1500
-    })
+      })
+    } else {
+      await db.collection('links').doc().update(linkObject);
+      toast('Link updated successfully', {
+      type: "warning",
+      autoClose: 1500
+      })
+    }
   }
 
   const deleteLink = async (id) => {
@@ -21,7 +30,8 @@ const Link = () => {
       await db.collection('links').doc(id).delete();
       toast('Link has been deleted', {
         type: "error",
-        autoClose: 1500
+        autoClose: 1500,
+        position: "bottom-center"
       })
     }
   }
@@ -45,7 +55,7 @@ const Link = () => {
   return (
     <div>
       <div className="col-md-4 mb-2">
-        <LinkForm addOrEditLink={addOrEditLink}/>
+        <LinkForm {...{addOrEditLink, currentId, links}}/>
       </div>
       <div className="col-md-8">
         {links.map(link => {
@@ -54,7 +64,10 @@ const Link = () => {
               <div className="card-body">
                 <div className="d-flex justify-content-between">
                   <h4>{link.name}</h4>
-                  <i className="material-icons text-danger" onClick={() => deleteLink(link.id)}>close</i>
+                  <div className="icons">
+                    <i className="material-icons" onClick={() => setCurrentId(link.id)}>create</i>
+                    <i className="material-icons text-danger" onClick={() => deleteLink(link.id)}>close</i>
+                  </div>
                 </div>
                 <p>{link.description}</p>
                 <a href={link.url} target="_blank" rel="noreferrer noopener">Go to Website</a>

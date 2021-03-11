@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../firebase';
 
 const LinkForm = (props) => {
 
@@ -20,6 +21,19 @@ const LinkForm = (props) => {
     props.addOrEditLink(formValues);
     setFormValues({...initialStateAttributes})
   }
+  
+  const getLinkById = async (id) => {
+    const doc = await db.collection('links').doc(id).get();
+    setFormValues(doc.data());
+  }
+  
+  useEffect(() => {
+    if (props.currentId === ''){
+      setFormValues({...initialStateAttributes})
+    } else {
+      getLinkById(props.currentId);
+    }
+  }, [props.currentId])
 
   return (
     <form className="card card-body" onSubmit={handleSubmit}>
@@ -63,7 +77,7 @@ const LinkForm = (props) => {
       </div>
 
       <button className="btn btn-primary">
-        Save
+        {props.currentId === '' ? "Save" : "Update"}
       </button>
     </form>
   )
